@@ -7,39 +7,43 @@ github :https://github.com/shviper
 date : 05/11/2022
 ###
 */
-setInterval(() => {
-  // time variable
-  const hourse = document.getElementById("hourse");
-  const minute = document.getElementById("minute");
-  const secound = document.getElementById("secound");
-  const month = document.getElementById("month");
-  const day = document.getElementById("day");
-  const year = document.getElementById("year");
-  const date = new Date();
-  // month array
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+const timeDiv = document.querySelector(".time");
+const dateDiv = document.querySelector(".date");
+// days array
+const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// month array
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+function setTime() {
+  const time = new Date();
+  const month = time.getMonth();
+  const day = time.getDay();
+  const date = time.getDate();
+  const hours = time.getHours();
+  const hoursForClock = hours >= 13 ? hours % 12 : hours;
+  const minutes = time.getMinutes();
+  // const seconds = time.getSeconds();
+  const ampm = hours >= 12 ? "PM" : "AM";
+
   //   display time
-  hourse.innerText =
-    date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-  minute.innerText =
-    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-  secound.innerText =
-    date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
-  month.innerText = months[date.getMonth()];
-  day.innerText = date.getDay() < 10 ? `0${date.getDay()}` : date.getDay();
-  year.innerText =
-    date.getFullYear() < 10 ? `0${date.getFullYear()}` : date.getFullYear();
-}, 1000);
+  timeDiv.innerHTML = `${hoursForClock}:${
+    minutes < 10 ? `0${minutes}` : minutes
+  } ${ampm}`;
+  dateDiv.innerHTML = `${days[day]} ${months[month]} ${
+    date < 10 ? `0${date}` : date
+  }`;
+}
+setTime();
+setInterval(setTime, 1000);
